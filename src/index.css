@@ -1,0 +1,127 @@
+/* Oswald */
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+/* Merriweather */
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap');
+/* Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+/* Fancy */
+@import url('https://fonts.googleapis.com/css2?family=Sekuya&display=swap');
+
+@import "tailwindcss";
+
+* {
+  font-family: "Poppins", sans-serif;
+  @apply text-gray-300;
+}
+
+@theme {
+  --font-oswald: "Oswald", sans-serif;
+  --font-meri: "Merriweather", serif;
+  --font-fancy:"Sekuya", system-ui;
+  --color-primary : #F0B023;
+  ;
+}
+
+
+.btn-primary {
+  @apply bg-gray-800 text-white px-6 py-1 cursor-pointer rounded-sm uppercase border border-gray-700 font-medium text-sm
+}
+.btn-danger {
+  @apply bg-red-900 border-red-800 text-white px-6 py-1 cursor-pointer rounded-sm uppercase border  font-medium text-sm
+}
+.form-group label{
+  @apply text-gray-300 mb-1 text-[13px] font-semibold inline-block; 
+}
+.form-group input{
+  @apply bg-gray-700 py-2.5 rounded-sm px-4 text-xs text-white outline-0 w-full;
+}
+
+::-webkit-scrollbar {
+  width: 3px;
+  height: 4px;
+  background: gray;
+}
+
+::-webkit-scrollbar-thumb {
+  background: red;
+  border-radius: 100vw;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb {
+  background-clip: content-box;
+  @apply bg-gray-400;
+}
+
+.none-track::-webkit-scrollbar {
+  display: none;
+}
+
+
+/* Animations  */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInAnim 1s forwards;
+}
+
+@keyframes fadeInAnim {
+  to {
+    transform: translateY(0) scaleX(-1);
+  }
+}
+
+.shaking {
+  animation: fadeInAnim 4s alternate infinite ease;
+}
+
+@keyframes fadeInAnim {
+  from {
+    transform: translateY(20px) scaleX(-1);;
+  }
+  to {
+    transform: translateY(0px) scaleX(-1);;
+  }
+}
+
+.zero-scale {
+  animation: fadeInAnim 0.3s alternate ease;
+}
+
+@keyframes fadeInAnim {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.funny-cartoon{
+ animation: sdieRun 2s alternate infinite ease;
+}
+
+@keyframes sdieRun {
+  from {
+    transform: translateX(70px)  ;
+    transform-origin: right bottom;
+  }
+  to {
+    transform: translateX(0px)  ;
+    transform-origin: right bottom;
+  }
+}
+
+.welcome-shaking{
+ animation: welcomeShake 0.5s alternate infinite ease-out;
+}
+
+@keyframes welcomeShake {
+  from {
+    transform: translateY(20px)  ;
+  }
+  to {
+    transform: translateY(0px)  ;
+  }
+}
+
