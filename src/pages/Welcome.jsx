@@ -48,7 +48,7 @@ export default function welcome() {
       <img src={box1} loading='lazy' className='absolute -top-5 -left-12  opacity-10 w-[20%] shaking'  />
       <img src={elem1} loading='lazy' className='absolute bottom-0 right-0 w-[10%] funny-cartoon'  />
         <div className='flex items-center gap-5'>
-          <h1 className='text-7xl font-semibold text-white font-oswald! mb-10' > <span className='text-primary! font-oswald!'>Welome </span> Please <Link to="/signup" className='cursor-pointer'  >log in.</Link> </h1>
+          <h1 className='text-7xl font-semibold text-white font-oswald! mb-10' > <span className='text-primary! font-oswald!'>Welome </span> Please <Link to="/login" className='cursor-pointer'  >log in.</Link> </h1>
         <img src={welcomeImg} loading='lazy' className='w-25 mb-10 welcome-shaking'  />
         </div>
         <AddCategory isOpen={isCatOpen} setIsOpen={setCatIsOpen} />

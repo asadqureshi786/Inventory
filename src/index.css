@@ -19,12 +19,20 @@
   --font-meri: "Merriweather", serif;
   --font-fancy:"Sekuya", system-ui;
   --color-primary : #F0B023;
-  ;
+  /* --color-background: #1c2541; */
+  /* --color-background: 'bg-gradient-to-b from-[#fff] to-[#0B132B]'; */
+}
+
+.bg-background {
+  @apply bg-linear-to-b from-[#1C2541] to-[#0B132B];
 }
 
 
 .btn-primary {
-  @apply bg-gray-800 text-white px-6 py-1 cursor-pointer rounded-sm uppercase border border-gray-700 font-medium text-sm
+  @apply transition bg-gray-800 text-white px-6 py-1 cursor-pointer rounded-sm uppercase border border-gray-700 font-medium text-sm
+}
+.btn-primary:hover {
+  @apply bg-gray-700 border-gray-600;
 }
 .btn-danger {
   @apply bg-red-900 border-red-800 text-white px-6 py-1 cursor-pointer rounded-sm uppercase border  font-medium text-sm

@@ -101,7 +101,7 @@ export default function AddInventory({ items, setItems }) {
             <div className="flex gap-5">
               <form
                 onSubmit={handleSubmit}
-                className="bg-gray-800 py-4 px-5 rounded-md "
+                className="bg-background py-4 px-5 rounded-md "
               >
                 <div className="grid grid-cols-12 gap-4">
                   <div className="col-span-6 flex flex-col gap-1">

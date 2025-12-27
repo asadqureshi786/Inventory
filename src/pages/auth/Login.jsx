@@ -1,29 +1,25 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { registerUser } from "../../api/userService";
-
 // components
 import AddCategory from "../../components/AddCategory";
 
 // Images
 import box1 from "../../assets/img/elem/box1.png";
+import welcomeImg from "../../assets/img/welcome2.png";
 import elem1 from "../../assets/img/welcome/elem1.png";
-
+import { components } from "react-select";
 // icons
 import { FaRegEyeSlash } from "react-icons/fa";
 
-export default function SignUp() {
+export default function Login() {
   let [isCatOpen, setCatIsOpen] = useState(false);
   const [formData, setFormData] = useState({
-    username: "",
     email: "",
     password: "",
-    confirm_password: "",
   });
   const [show, setShow] = useState({
     password: false,
-    confirm_password: false,
   });
 
   const togglePassword = (key) => {
@@ -35,21 +31,19 @@ export default function SignUp() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleform = async (e) => {
-    try {
-      const response = await axios.post('http://localhost:5000/register', formData);
-      
-      console.log(response)
-    } catch (err) {
-      console.error("Registration error:", err);
-    }
+   const  handleform  =  async(e) => {
+    try{
+      const response = await axios.post('')
+    }catch(err){}
+
+
 
     e.preventDefault();
+    console.log(formData);
     setFormData({
-      username: "",
       email: "",
       password: "",
-      confirm_password: "",
+  
     });
     localStorage.setItem("user", JSON.stringify(formData));
   };
@@ -69,7 +63,7 @@ export default function SignUp() {
       <div className="flex items-center gap-5">
         <h1 className="text-6xl font-semibold text-white font-oswald! mb-10">
           {" "}
-          <span className="text-primary! font-oswald!">Sign </span>in
+          <sspan className="text-primary! font-oswald!">Log</sspan>in
         </h1>
         {/* <img
           src={welcomeImg}
@@ -80,14 +74,6 @@ export default function SignUp() {
       <AddCategory isOpen={isCatOpen} setIsOpen={setCatIsOpen} />
       <div className="sign-up-form">
         <form className="flex flex-col gap-4 bg-background p-6 rounded-md w-100">
-          <div className="form-group">
-            <label>Username</label>
-            <input
-              name="username"
-              onChange={handelChange}
-              value={formData.username}
-            />
-          </div>
           <div className="form-group">
             <label>Email</label>
             <input name="email" onChange={handelChange} value={formData.email} />
@@ -109,34 +95,12 @@ export default function SignUp() {
               </span>
             </div>
           </div>
-          <div className="form-group">
-            <label>Confirm Password</label>
-            <div className="relative">
-              <input
-                name="confirm_password"
-                onChange={handelChange}
-                value={formData.confirm_password}
-                type={`${show.confirm_password ? "text" : "password"}`}
-              />
-              <span
-                className="absolute top-1/2 right-2 -translate-y-1/2 cursor-pointer"
-                onClick={() => togglePassword("confirm_password")}
-              >
-                <FaRegEyeSlash />
-              </span>
-            </div>
-          </div>
-
-          <button
-            type="button"
-            onClick={handleform}
-            className="btn-primary py-1.5! capitalize!"
-          >
-            Sign up
+ 
+     
+          <button type="button" onClick={handleform} className="btn-primary py-1.5! capitalize!">
+            Login
           </button>
-          <Link to="/login" className="font-light text-xs text-center">
-            Already have an account? <span className="font-medium">Login</span>
-          </Link>
+          <Link to="/signup" className="font-light text-xs text-center" >Don't have an account? <span className="font-medium">Sign Up</span></Link>
         </form>
       </div>
     </div>
