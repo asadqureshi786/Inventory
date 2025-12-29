@@ -59,7 +59,9 @@ export default function Products() {
   });
 
   const removeItem = (index)=>{
-    const getItem = localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : []
+    // console.log(index)
+    const getItem = localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : [];
+    const updateItem = getItem.filter()
     getItem.splice(index,1);
     localStorage.setItem('items',JSON.stringify(getItem));
     dispatch(allItems());
@@ -176,7 +178,7 @@ export default function Products() {
                 {item.categories ? item.categories : "No categories Name"}
               </span>
               {
-                showRemove && <span className="zero-scale text-[12px] absolute top-3 left-4 bg-red-800 rounded-sm px-1.5 py-1 cursor-pointer" onClick={()=> removeItem(index)} >
+                showRemove && <span className="zero-scale text-[12px] absolute top-3 left-4 bg-red-800 rounded-sm px-1.5 py-1 cursor-pointer" onClick={()=> removeItem(item.id)} >
                 <BsTrash3/>
               </span>
               }

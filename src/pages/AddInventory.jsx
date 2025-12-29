@@ -27,6 +27,7 @@ export default function AddInventory({ items, setItems }) {
   };
   // return [setRoot];
   const [form, setFrom] = useState({
+    id :  Date.now(),
     productImage: "",
     otherImages: [],
     productName: "",
@@ -68,8 +69,9 @@ export default function AddInventory({ items, setItems }) {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    setItems((prevItems) => [form, ...prevItems]);
+    // setFrom((prevItems) => [form, ...prevItems]);
     setFrom({
+      id : "",
       productImage: "",
       otherImages: [],
       productName: "",

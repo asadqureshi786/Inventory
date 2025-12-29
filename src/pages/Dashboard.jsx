@@ -53,9 +53,12 @@ export default function Dashboard() {
       </ul>
       <div className="grid grid-cols-12 pt-6 ">
         <div className="col-span-7">
-          <h2 className="text-2xl font-semibold mb-5 text-white">
+         <div className="flex justify-between items-center mb-5">
+           <h2 className="text-2xl font-semibold  text-white">
             All Products
           </h2>
+          <Link to="/add-inventory" className="btn-primary" >Add Products</Link>
+         </div>
           <table className="w-full">
             <thead>
               <tr>

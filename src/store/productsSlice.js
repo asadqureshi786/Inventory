@@ -14,6 +14,7 @@ export const productSlice = createSlice({
       try {
         const parseData = data ? JSON.parse(data) : [];
         state.list = Array.isArray(parseData) ? parseData.reverse() : [];
+        console.log("ye rahi list"+parseData)
       } catch(error) {
         state.list = [];
         console.error("Failed to parse localStorage items:", error);
