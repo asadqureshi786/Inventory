@@ -10,6 +10,7 @@ export const productSlice = createSlice({
   initialState,
   reducers: {
     allItems: (state) => {
+      console.log("Running")
       const data = localStorage.getItem("items");
       try {
         const parseData = data ? JSON.parse(data) : [];

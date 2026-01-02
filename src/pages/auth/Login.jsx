@@ -1,18 +1,22 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import {useAuth} from '../../AuthContext'
+import toast from "react-hot-toast";
+
 // components
 import AddCategory from "../../components/AddCategory";
 
 // Images
 import box1 from "../../assets/img/elem/box1.png";
-import welcomeImg from "../../assets/img/welcome2.png";
 import elem1 from "../../assets/img/welcome/elem1.png";
-import { components } from "react-select";
+
 // icons
 import { FaRegEyeSlash } from "react-icons/fa";
 
 export default function Login() {
+  const {signin} = useAuth()
+  
   let [isCatOpen, setCatIsOpen] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
@@ -32,20 +36,24 @@ export default function Login() {
   };
 
    const  handleform  =  async(e) => {
+    e.preventDefault();
+
+
     try{
-      const response = await axios.post('')
+      const response = await signin(formData.email, formData.password)
+      console.log(response)
+          toast.error(response.error.message);
+
     }catch(err){}
 
 
 
-    e.preventDefault();
-    console.log(formData);
-    setFormData({
-      email: "",
-      password: "",
+    // console.log(formData);
+    // setFormData({
+    //   email: "",
+    //   password: "",
   
-    });
-    localStorage.setItem("user", JSON.stringify(formData));
+    // });
   };
 
   return (

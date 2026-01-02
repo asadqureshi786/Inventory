@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { registerUser } from "../../api/userService";
+import { useAuth } from "../../AuthContext";
+import toast from "react-hot-toast";
 
 // components
 import AddCategory from "../../components/AddCategory";
@@ -12,11 +14,13 @@ import elem1 from "../../assets/img/welcome/elem1.png";
 
 // icons
 import { FaRegEyeSlash } from "react-icons/fa";
+import { frameData } from "motion";
 
 export default function SignUp() {
+  const { signup } = useAuth();
   let [isCatOpen, setCatIsOpen] = useState(false);
+  const [error, setError] = useState({});
   const [formData, setFormData] = useState({
-    username: "",
     email: "",
     password: "",
     confirm_password: "",
@@ -31,22 +35,41 @@ export default function SignUp() {
   };
 
   const handelChange = (e) => {
+    setError((prev) => ({ ...prev, [name]: false }));
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleform = async (e) => {
+    // Req Fields
+    const newErrors = {};
+    for (let key in formData) {
+      if (!formData[key]) {
+        newErrors[key] = true; 
+      }
+    }
+    setError(newErrors);
+    console.log(error)
+
+    // Check Password Match
+    if (formData.password.trim() !== formData.confirm_password.trim()) {
+      setError((prev) => ({ ...prev, password_not_match: true }));
+      if (error.password_not_match) {
+        toast.error("Password not match");
+      }
+    }
+
+  
     try {
-      const response = await axios.post('http://localhost:5000/register', formData);
-      
-      console.log(response)
+       const response = await signup(formData.email, formData.password);
+    toast.error("Invalid email or password");
+    console.log(response);
     } catch (err) {
       console.error("Registration error:", err);
     }
 
     e.preventDefault();
     setFormData({
-      username: "",
       email: "",
       password: "",
       confirm_password: "",
@@ -81,16 +104,15 @@ export default function SignUp() {
       <div className="sign-up-form">
         <form className="flex flex-col gap-4 bg-background p-6 rounded-md w-100">
           <div className="form-group">
-            <label>Username</label>
-            <input
-              name="username"
-              onChange={handelChange}
-              value={formData.username}
-            />
-          </div>
-          <div className="form-group">
             <label>Email</label>
-            <input name="email" onChange={handelChange} value={formData.email} />
+            <input
+              name="email"
+              onChange={handelChange}
+              value={formData.email}
+              className={`border border-transparent ${
+                error.email ? "border-red-400!" : ""
+              }`}
+            />
           </div>
           <div className="form-group">
             <label>Password</label>
@@ -100,6 +122,9 @@ export default function SignUp() {
                 onChange={handelChange}
                 value={formData.password}
                 type={`${show.password ? "text" : "password"}`}
+                className={`border border-transparent ${
+                  error.password ? "border-red-400!" : ""
+                }`}
               />
               <span
                 className="absolute top-1/2 right-2 -translate-y-1/2 cursor-pointer"
@@ -117,6 +142,9 @@ export default function SignUp() {
                 onChange={handelChange}
                 value={formData.confirm_password}
                 type={`${show.confirm_password ? "text" : "password"}`}
+                className={`border border-transparent ${
+                  error.confirm_password ? "border-red-400!" : ""
+                }`}
               />
               <span
                 className="absolute top-1/2 right-2 -translate-y-1/2 cursor-pointer"
