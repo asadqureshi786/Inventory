@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
-import {useAuth} from '../../AuthContext'
+import { useAuth } from "../../AuthContext";
 import toast from "react-hot-toast";
+import { supabase } from "../../supabaseClient";
 
 // components
 import AddCategory from "../../components/AddCategory";
@@ -15,8 +15,8 @@ import elem1 from "../../assets/img/welcome/elem1.png";
 import { FaRegEyeSlash } from "react-icons/fa";
 
 export default function Login() {
-  const {signin} = useAuth()
-  
+  const { signin } = useAuth();
+
   let [isCatOpen, setCatIsOpen] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
@@ -35,24 +35,32 @@ export default function Login() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-   const  handleform  =  async(e) => {
+  const handleform = async (e) => {
     e.preventDefault();
+    // console.log({
+    //     email: formData.email,
+    //     password: formData.password,
+    //   })
+    //   return
 
-
-    try{
-      const response = await signin(formData.email, formData.password)
-      console.log(response)
-          toast.error(response.error.message);
-
-    }catch(err){}
-
-
+    try {
+      const resposne = await supabase.auth.signInWithPassword({
+        email: formData.email,
+        password: formData.password,
+      });
+      console.log(resposne)
+      return;
+      if (error) {
+        console.log(error.message);
+        return;
+      }
+    } catch (err) {}
 
     // console.log(formData);
     // setFormData({
     //   email: "",
     //   password: "",
-  
+
     // });
   };
 
@@ -84,7 +92,11 @@ export default function Login() {
         <form className="flex flex-col gap-4 bg-background p-6 rounded-md w-100">
           <div className="form-group">
             <label>Email</label>
-            <input name="email" onChange={handelChange} value={formData.email} />
+            <input
+              name="email"
+              onChange={handelChange}
+              value={formData.email}
+            />
           </div>
           <div className="form-group">
             <label>Password</label>
@@ -103,12 +115,17 @@ export default function Login() {
               </span>
             </div>
           </div>
- 
-     
-          <button type="button" onClick={handleform} className="btn-primary py-1.5! capitalize!">
+
+          <button
+            type="button"
+            onClick={handleform}
+            className="btn-primary py-1.5! capitalize!"
+          >
             Login
           </button>
-          <Link to="/signup" className="font-light text-xs text-center" >Don't have an account? <span className="font-medium">Sign Up</span></Link>
+          <Link to="/signup" className="font-light text-xs text-center">
+            Don't have an account? <span className="font-medium">Sign Up</span>
+          </Link>
         </form>
       </div>
     </div>

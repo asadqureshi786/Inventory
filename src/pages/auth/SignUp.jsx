@@ -4,6 +4,9 @@ import { Link } from "react-router-dom";
 import { registerUser } from "../../api/userService";
 import { useAuth } from "../../AuthContext";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { supabase } from "../../supabaseClient";
+import Loader from "../../components/Loader";
 
 // components
 import AddCategory from "../../components/AddCategory";
@@ -17,7 +20,10 @@ import { FaRegEyeSlash } from "react-icons/fa";
 import { frameData } from "motion";
 
 export default function SignUp() {
+  const navigate = useNavigate();
+
   const { signup } = useAuth();
+  let [loading, setLoading] = useState(false);
   let [isCatOpen, setCatIsOpen] = useState(false);
   const [error, setError] = useState({});
   const [formData, setFormData] = useState({
@@ -45,26 +51,44 @@ export default function SignUp() {
     const newErrors = {};
     for (let key in formData) {
       if (!formData[key]) {
-        newErrors[key] = true; 
+        newErrors[key] = true;
       }
     }
-    setError(newErrors);
-    console.log(error)
+    const objectLength = Object.keys(newErrors).length;
+    console.log(objectLength)
+    if(objectLength >= 1){
+      setError(newErrors);
+       setLoading(false);
+       return;
+    }
 
     // Check Password Match
     if (formData.password.trim() !== formData.confirm_password.trim()) {
       setError((prev) => ({ ...prev, password_not_match: true }));
+      setLoading(false);
       if (error.password_not_match) {
         toast.error("Password not match");
+        setLoading(false);
       }
     }
 
-  
     try {
-       const response = await signup(formData.email, formData.password);
-    toast.error("Invalid email or password");
-    console.log(response);
+      setLoading(true);
+      const response = await supabase.auth.signUp({
+        email: formData.email,
+        password: formData.password,
+      });
+
+      // console.log("this response"+response)
+      // return;
+      if (response.data.user && !response.data.session) {
+        toast.success("Account created! Please Login");
+        setTimeout(() => {
+          navigate("/login");
+        }, 1000);
+      }
     } catch (err) {
+      setLoading(false);
       console.error("Registration error:", err);
     }
 
@@ -158,8 +182,9 @@ export default function SignUp() {
           <button
             type="button"
             onClick={handleform}
-            className="btn-primary py-1.5! capitalize!"
+            className="btn-primary py-1.5! capitalize! flex justify-center items-center gap-3"
           >
+            {loading && <Loader />}
             Sign up
           </button>
           <Link to="/login" className="font-light text-xs text-center">
